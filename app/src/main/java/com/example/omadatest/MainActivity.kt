@@ -10,9 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.example.omadatest.app.OmadaApplication
-import com.example.omadatest.ui.screens.PhotosScreen
-import com.example.omadatest.ui.screens.PhotosViewModel
-import com.example.omadatest.ui.screens.PhotosViewModelFactory
+import com.example.omadatest.ui.features.photos.PhotosScreen
+import com.example.omadatest.ui.features.photos.PhotosViewModel
+import com.example.omadatest.ui.features.photos.PhotosViewModelFactory
 import com.example.omadatest.ui.theme.OmadaTestTheme
 import javax.inject.Inject
 

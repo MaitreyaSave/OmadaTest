@@ -1,4 +1,4 @@
-package com.example.omadatest.ui.screens
+package com.example.omadatest.ui.features.photos
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

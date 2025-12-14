@@ -3,7 +3,7 @@ package com.example.omadatest.di
 import com.example.omadatest.MainActivity
 import com.example.omadatest.data.RepositoryModule
 import com.example.omadatest.network.NetworkModule
-import com.example.omadatest.ui.screens.PhotosViewModelFactory
+import com.example.omadatest.ui.features.photos.PhotosViewModelFactory
 import dagger.Component
 import javax.inject.Singleton
 

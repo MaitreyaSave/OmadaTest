@@ -1,4 +1,4 @@
-package com.example.omadatest.ui.screens
+package com.example.omadatest.ui.features.photos
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ fun PhotosScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text("Test string")
+        Text("Test string 111")
 
     }
 
