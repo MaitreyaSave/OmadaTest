@@ -38,6 +38,9 @@ class PhotosViewModel @Inject constructor(
             isRequestInFlight = true
             _uiState.value = PhotosUiState.Loading
 
+            // Force delay to show loading state
+            kotlinx.coroutines.delay(2000)
+
             runCatching {
                 repository.getPhotos(
                     query = query,
