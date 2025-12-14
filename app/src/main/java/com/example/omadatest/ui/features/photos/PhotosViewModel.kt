@@ -1,10 +1,11 @@
 package com.example.omadatest.ui.features.photos
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.omadatest.data.FlickrRepository
+import com.example.omadatest.data.repository.FlickrRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,18 +14,90 @@ class PhotosViewModel @Inject constructor(
 ) : ViewModel() {
 
 
+    private val _uiState =
+        MutableStateFlow<PhotosUiState>(PhotosUiState.Loading)
+    val uiState: StateFlow<PhotosUiState> = _uiState
+
+    private var currentPage = 1
+    private var currentQuery: String = ""
+    private var isRequestInFlight = false
+    private var canLoadMore = true
+
     init {
-        loadPhotos()
+        loadPhotos(query = "")
     }
 
-    fun loadPhotos() {
+    fun loadPhotos(query: String) {
+        if (isRequestInFlight) return
+
+        currentQuery = query
+        currentPage = 1
+        canLoadMore = true
+
         viewModelScope.launch {
-            val list = repository.getPhotos("")
-            Log.d("PhotosVM", "list size: ${list.size}")
+            isRequestInFlight = true
+            _uiState.value = PhotosUiState.Loading
+
+            runCatching {
+                repository.getPhotos(
+                    query = query,
+                    page = currentPage
+                )
+            }.onSuccess { photos ->
+                canLoadMore = photos.isNotEmpty()
+
+                _uiState.value = PhotosUiState.Success(
+                    photos = photos,
+                    isLoadingMore = false,
+                    canLoadMore = canLoadMore
+                )
+            }.onFailure { throwable ->
+                _uiState.value = PhotosUiState.Error(
+                    message = throwable.message ?: "Something went wrong"
+                )
+            }
+
+            isRequestInFlight = false
         }
     }
 
+    fun loadNextPage() {
+        val currentState = _uiState.value
+        if (currentState !is PhotosUiState.Success) return
+        if (!canLoadMore || isRequestInFlight) return
+
+        viewModelScope.launch {
+            isRequestInFlight = true
+            currentPage++
+
+            _uiState.value = currentState.copy(
+                isLoadingMore = true
+            )
+
+            runCatching {
+                repository.getPhotos(
+                    query = currentQuery,
+                    page = currentPage
+                )
+            }.onSuccess { newPhotos ->
+                canLoadMore = newPhotos.isNotEmpty()
+
+                _uiState.value = currentState.copy(
+                    photos = currentState.photos + newPhotos,
+                    isLoadingMore = false,
+                    canLoadMore = canLoadMore
+                )
+            }.onFailure { throwable ->
+                _uiState.value = PhotosUiState.Error(
+                    message = throwable.message ?: "Pagination failed"
+                )
+            }
+
+            isRequestInFlight = false
+        }
+    }
 }
+
 
 class PhotosViewModelFactory @Inject constructor(
     private val repository: FlickrRepository
