@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.omadatest.data.Photo
@@ -85,6 +86,7 @@ internal fun PhotoGridItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .padding(8.dp)
             .aspectRatio(1f)
             .clickable { onClick(photo) },
         shape = RoundedCornerShape(8.dp),
@@ -93,6 +95,7 @@ internal fun PhotoGridItem(
         AsyncImage(
             model = photo.imageUrl,
             contentDescription = photo.title,
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()
         )
     }
