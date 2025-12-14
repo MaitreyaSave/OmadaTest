@@ -1,4 +1,4 @@
-package com.example.omadatest.network
+package com.example.omadatest.data.network
 
 import com.example.omadatest.data.FlickrPhotoResponse
 import retrofit2.http.GET

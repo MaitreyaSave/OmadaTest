@@ -1,4 +1,4 @@
-package com.example.omadatest.network
+package com.example.omadatest.data.network
 
 import dagger.Module
 import dagger.Provides

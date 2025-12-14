@@ -1,6 +1,6 @@
-package com.example.omadatest.data
+package com.example.omadatest.data.repository
 
-import com.example.omadatest.network.FlickrApiService
+import com.example.omadatest.data.network.FlickrApiService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,6 +11,6 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideFlickrRepository(apiService: FlickrApiService): FlickrRepository {
-        return FlickrRepository(apiService)
+        return FlickrRepositoryImpl(apiService)
     }
 }
