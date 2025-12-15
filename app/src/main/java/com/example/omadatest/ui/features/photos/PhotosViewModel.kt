@@ -18,8 +18,10 @@ class PhotosViewModel @Inject constructor(
         MutableStateFlow<PhotosUiState>(PhotosUiState.Loading)
     val uiState: StateFlow<PhotosUiState> = _uiState
 
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query
+
     private var currentPage = 1
-    private var currentQuery: String = ""
     private var isRequestInFlight = false
     private var canLoadMore = true
     private var firstTimeLoadingExperience = true
@@ -28,10 +30,24 @@ class PhotosViewModel @Inject constructor(
         loadPhotos(query = "")
     }
 
-    fun loadPhotos(query: String) {
+    fun onQueryChange(newQuery: String) {
+        _query.value = newQuery
+    }
+
+    fun search() {
+        loadPhotos(_query.value)
+    }
+
+    fun clearQuery() {
+        _query.value = ""
+        loadPhotos("")
+    }
+
+
+    private fun loadPhotos(query: String) {
         if (isRequestInFlight) return
 
-        currentQuery = query
+        _query.value = query
         currentPage = 1
         canLoadMore = true
 
@@ -84,7 +100,7 @@ class PhotosViewModel @Inject constructor(
 
             runCatching {
                 repository.getPhotos(
-                    query = currentQuery,
+                    query = _query.value,
                     page = currentPage
                 )
             }.onSuccess { newPhotos ->

@@ -20,9 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -37,7 +35,7 @@ fun PhotosScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-    var query by remember { mutableStateOf("") }
+    val query by viewModel.query.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
     LaunchedEffect(uiState) {
@@ -49,11 +47,11 @@ fun PhotosScreen(
     }
 
     // fetch recent photos if query is empty (cleared)
-    LaunchedEffect(query) {
-        if (query.isEmpty()) {
-            viewModel.loadPhotos("")
-        }
-    }
+//    LaunchedEffect(query) {
+//        if (query.isEmpty()) {
+//            viewModel.loadPhotos("")
+//        }
+//    }
 
     Column(
         modifier = modifier
@@ -66,7 +64,7 @@ fun PhotosScreen(
         // Search bar
         OutlinedTextField(
             value = query,
-            onValueChange = { query = it },
+            onValueChange = viewModel::onQueryChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
@@ -77,8 +75,8 @@ fun PhotosScreen(
                     if (query.isNotBlank()) {
                         IconButton(
                             onClick = {
-                                query = ""
                                 focusManager.clearFocus()
+                                viewModel.clearQuery()
                             }
                         ) {
                             Icon(
@@ -90,7 +88,7 @@ fun PhotosScreen(
                     IconButton(
                         onClick = {
                             focusManager.clearFocus()
-                            viewModel.loadPhotos(query)
+                            viewModel.search()
                         }
                     ) {
                         Icon(
@@ -106,7 +104,7 @@ fun PhotosScreen(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     focusManager.clearFocus()
-                    viewModel.loadPhotos(query)
+                    viewModel.search()
                 }
             )
         )
