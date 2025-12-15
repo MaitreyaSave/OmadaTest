@@ -43,3 +43,4 @@
 - Add localized caching
 - Add support for Theming (Light / Dark mode)
 - Add navigation logic - if we need to go to multipe different screens.
+- Possibly have a vault (proguard) setup for storing secrets and for encryption.
