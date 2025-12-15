@@ -20,7 +20,7 @@
 
 ## Screenshots + Recording
 ### Recent Images
-![Photo Grid]()
+![Recent Images](\Docs\Screenshots\recent_images.png)
 
 ### Enlarged Photo
 ![Photo Detail]()
