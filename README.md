@@ -6,6 +6,7 @@
 - Loading and error state handling
 - Enlarged photo view maintaining correct aspect ratio (Bonus)
 - Optional overlay for photo titles (Extra)
+- Orientation (Landscape mode) persistance
 - Unit tests for ViewModel, Repository (Bonus)
 
 
@@ -18,6 +19,24 @@
 - JUnit + Mockito for unit testing
 
 ## Screenshots + Recording
+### Recent Images
+![Photo Grid]()
+
+### Enlarged Photo
+![Photo Detail]()
+
+### Search Functionality
+![Search]()
+
+### Landscape Mode
+![Landscape]()
+---
+
+## Demo Video
+
+[![Watch Demo]()
+
+---
 
 
 ## Future Scope
