@@ -32,9 +32,8 @@
 
 ## Demo Video
 
-| Demo |
-|------|
-| <video src="Docs/Videos/final_rec_mob.mp4" width="300" controls></video> |
+[Watch Demo Video](Docs/Videos/final_rec_mob.mp4)
+
 
 
 
