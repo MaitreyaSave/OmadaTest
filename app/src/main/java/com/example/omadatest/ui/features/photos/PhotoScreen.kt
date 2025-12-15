@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,6 +38,7 @@ fun PhotosScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     var query by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(uiState) {
         if (uiState is PhotosUiState.Error) {
@@ -73,14 +75,24 @@ fun PhotosScreen(
             trailingIcon = {
                 Row {
                     if (query.isNotBlank()) {
-                        IconButton(onClick = { query = "" }) {
+                        IconButton(
+                            onClick = {
+                                query = ""
+                                focusManager.clearFocus()
+                            }
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Clear"
                             )
                         }
                     }
-                    IconButton(onClick = { viewModel.loadPhotos(query) }) {
+                    IconButton(
+                        onClick = {
+                            focusManager.clearFocus()
+                            viewModel.loadPhotos(query)
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Search"
@@ -92,7 +104,10 @@ fun PhotosScreen(
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
-                onSearch = { viewModel.loadPhotos(query) }
+                onSearch = {
+                    focusManager.clearFocus()
+                    viewModel.loadPhotos(query)
+                }
             )
         )
 
