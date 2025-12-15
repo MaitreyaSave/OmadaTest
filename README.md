@@ -19,24 +19,24 @@
 - JUnit + Mockito for unit testing
 
 ## Screenshots + Recording
-### Recent Images
-![Recent Images](\Docs\Screenshots\recent_images.png)
 
-### Enlarged Photo
-![Photo Detail]()
+| Recent Images | Search - Car |
+|---------------|---------------|
+| <img src="Docs/Screenshots/recent_images.png" alt="Recent Images" width="300"> | <img src="Docs/Screenshots/car_search.png" alt="Search Car" width="300"> |
 
-### Search Functionality
-![Search]()
+| Enlarged Image | Landscape Mode |
+|---------------|---------------|
+| <img src="Docs/Screenshots/enlarged_image.png" alt="Enlarged Image" width="300"> | <img src="Docs/Screenshots/landscape.png" alt="Landscape Mode" width="600"> |
 
-### Landscape Mode
-![Landscape]()
----
+
 
 ## Demo Video
 
-[![Watch Demo]()
+| Demo |
+|------|
+| <video src="Docs/Videos/final_rec_mob.mp4" width="300" controls></video> |
 
----
+
 
 
 ## Future Scope
