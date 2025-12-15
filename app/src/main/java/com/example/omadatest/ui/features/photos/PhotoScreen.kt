@@ -46,6 +46,13 @@ fun PhotosScreen(
         }
     }
 
+    // fetch recent photos if query is empty (cleared)
+    LaunchedEffect(query) {
+        if (query.isEmpty()) {
+            viewModel.loadPhotos("")
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()

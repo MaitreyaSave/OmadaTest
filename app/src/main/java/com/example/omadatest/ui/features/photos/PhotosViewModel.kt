@@ -22,6 +22,7 @@ class PhotosViewModel @Inject constructor(
     private var currentQuery: String = ""
     private var isRequestInFlight = false
     private var canLoadMore = true
+    private var firstTimeLoadingExperience = true
 
     init {
         loadPhotos(query = "")
@@ -38,8 +39,12 @@ class PhotosViewModel @Inject constructor(
             isRequestInFlight = true
             _uiState.value = PhotosUiState.Loading
 
-            // Force delay to show loading state
-            kotlinx.coroutines.delay(2000)
+            // Force delay to show loading state first time
+            if (firstTimeLoadingExperience) {
+                kotlinx.coroutines.delay(2000)
+                firstTimeLoadingExperience = false
+            }
+
 
             runCatching {
                 repository.getPhotos(
